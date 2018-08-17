@@ -135,7 +135,7 @@ int main(int argc, char **argv) {
 		result.setUserCuts(cplex.getNcuts(IloCplex::CutType::CutUser));
 		result.writeToFile(resultOutfile);
 		printf(ANSI_COLOR_YELLOW 
-			"[info] results written to %s"
+			"[info] results written to %s\n"
 			ANSI_COLOR_RESET, parser.getResultFile().c_str());
 	}
 
