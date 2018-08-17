@@ -1,0 +1,11 @@
+# Ignore the build, data, and instance_generation dirs
+build
+data
+instance_generation
+
+# Ignore any executables
+bin/*
+
+
+# Ignore Mac specific files
+.DS_Store
