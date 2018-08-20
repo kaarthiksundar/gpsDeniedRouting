@@ -12,20 +12,21 @@ option(ENABLE_GUROBI "Link to Gurobi libraries" OFF)
 # Find CPLEX (optional)
 option(ENABLE_CPLEX "Link to Cplex libraries" ON)
 
-# LEMON settings
-set(LEMON_INCLUDE_DIR "/home/kaarthik/libraries/lemon/include" CACHE PATH "LEMON include directory")
-set(LEMON_INCLUDE_DIRS "${LEMON_INCLUDE_DIR}")
 
+# LEMON settings
 if (UNIX)
+    set(LEMON_INCLUDE_DIR "/home/kaarthik/libraries/lemon/include" CACHE PATH "LEMON include directory")
+    set(LEMON_INCLUDE_DIRS "${LEMON_INCLUDE_DIR}")
     set(LEMON_LIB_NAME "libemon.a")
+    set(LEMON_LIBRARY "/home/kaarthik/libraries/lemon/lib/${LEMON_LIB_NAME}" CACHE FILEPATH "LEMON library")
+    set(LEMON_LIBRARIES "${LEMON_LIBRARY}")
+    MARK_AS_ADVANCED(LEMON_LIBRARY LEMON_INCLUDE_DIR)
+    include_directories(${LEMON_INCLUDE_DIRS})
+    set(LIBS ${LIBS} ${LEMON_LIBRARIES})
+elseif (APPLE)
+    FIND_PACKAGE(lemon)
 endif()
 
-set(LEMON_LIBRARY "/home/kaarthik/libraries/lemon/lib/${LEMON_LIB_NAME}" CACHE FILEPATH "LEMON library")
-set(LEMON_LIBRARIES "${LEMON_LIBRARY}")
-
-MARK_AS_ADVANCED(LEMON_LIBRARY LEMON_INCLUDE_DIR)
-include_directories(${LEMON_INCLUDE_DIRS})
-set(LIBS ${LIBS} ${LEMON_LIBRARIES})
 
 # Find GUROBI?
 if (ENABLE_GUROBI)
@@ -43,7 +44,11 @@ if (ENABLE_CPLEX)
     find_package(CPLEX)
     include_directories(${CPLEX_INCLUDE_DIRS})
     set(LIBS ${LIBS} ${CPLEX_LIBRARIES})
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -O -fPIC -fno-strict-aliasing -fexceptions -DNDEBUG -DIL_STD -lpthread")
+    if (UNIX)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -O -fPIC -fno-strict-aliasing -fexceptions -DNDEBUG -DIL_STD -lpthread -ldl -Wignored-attributes")
+    elseif (APPLE)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -DNDEBUG -DIL_STD")
+    endif()
 endif()
 
 add_subdirectory(src)
