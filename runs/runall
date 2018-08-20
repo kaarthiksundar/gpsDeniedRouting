@@ -1,9 +1,0 @@
-#!/bin/bash
-
-for t in 15 20 25 30
-do
-    for i in $(seq 1 20)
-    do
-        ./main $t-$((5*$t))-$i instances/$t/ 1 35
-    done
-done
