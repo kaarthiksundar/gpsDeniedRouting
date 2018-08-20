@@ -2,6 +2,7 @@
 build
 data
 instance_generation
+runs/output/*
 
 # Ignore any executables
 bin/*
