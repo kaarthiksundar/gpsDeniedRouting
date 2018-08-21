@@ -1,0 +1,3 @@
+../bin/main -f 55-200-8 -p ../instances/ -t 15 -d 1 
+../bin/main -f 60-200-3 -p ../instances/ -t 15 -d 1 
+../bin/main -f 60-200-9 -p ../instances/ -t 15 -d 1 
