@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
 		cplex.setParam(IloCplex::MIPInterval, 5);
 		cplex.setParam(IloCplex::MIPDisplay, 3);
 		cplex.setParam(IloCplex::VarSel, 3);
-		cplex.setParam(IloCplex::TiLim, 7200);
+		cplex.setParam(IloCplex::TiLim, 7200.0);
 		cplex.setParam(IloCplex::LBHeur, 1);
 
 		ofstream outfile;
@@ -133,6 +133,7 @@ int main(int argc, char **argv) {
 		result.setPlacementCost(placementCost);
 		result.setTotalCost(placementCost + travelCost);
 		result.setUserCuts(cplex.getNcuts(IloCplex::CutType::CutUser));
+		result.setRelOptGap(cplex.getMIPRelativeGap());
 		result.writeToFile(resultOutfile);
 		printf(ANSI_COLOR_YELLOW 
 			"[info] results written to %s\n"

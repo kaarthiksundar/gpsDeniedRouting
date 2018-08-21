@@ -136,6 +136,7 @@ class Result {
 		IloAlgorithm::Status _status;
 		int _userCuts;
 		double _computationTime;
+		double _relOptGap;
 
 	public:
 		Result(const std::vector<std::tuple<double, double>> targetCoords, 
@@ -145,7 +146,7 @@ class Result {
 			_threshold(), _discretizationLength(), 
 			_targetCoords(targetCoords), _lmCoords(lmCoords), _lmPlacementCost(lmPlacementCost), 
 			_path(), _lmIndexes(), _placementCost(0.0), _travelCost(0.0), _totalCost(0.0), 
-			_status(status), _userCuts(0), _computationTime(0.0) {};
+			_status(status), _userCuts(0), _computationTime(0.0), _relOptGap(0.0) {};
 
 		void setThreshold(double threshold) { _threshold = threshold; };
 		void setDiscretizationLength(double discretizationLength) { _discretizationLength = discretizationLength; };
@@ -156,6 +157,7 @@ class Result {
 		void setTotalCost(double totalCost) { _totalCost = totalCost; };
 		void setUserCuts(int userCuts) { _userCuts = userCuts; };
 		void setComputationTime(double computationTime) { _computationTime = computationTime; };
+		void setRelOptGap(double relOptGap) { _relOptGap = relOptGap; };
 
 		int getNumTargets() const { return _numTargets; };
 		int getGridSize() const { return _gridSize; };
@@ -170,6 +172,7 @@ class Result {
 		IloAlgorithm::Status getStatus() const { return _status; };
 		int getUserCuts() const { return _userCuts; };
 		double getComputationTime() const { return _computationTime; };
+		double getRelOptGap() const { return _relOptGap; };
 
 		void writeToFile(std::ofstream &);
 	

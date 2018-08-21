@@ -190,6 +190,9 @@ void Result::writeToFile(std::ofstream & out) {
 	out << "branch-cut-algorithm statistics" << std::endl;
 	out << "number of user cuts added: " << getUserCuts() << std::endl;
 	out << "computation time: " << std::setprecision(2) << getComputationTime() << " seconds" << std::endl;	
+	if (getStatus() == IloAlgorithm::Status::Feasible) 
+		out << "relative optimality gap: " << std::setprecision(4) << getRelOptGap() << std::endl;
+	
 	return;
 
 };
