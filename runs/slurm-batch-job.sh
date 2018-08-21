@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 #SBATCH --ntasks=1
-#SBATCH --time=2:00:00
+#SBATCH --time=2:15:00
 #SBATCH --exclusive
 #
 #This recomend to minimize clashes with other users
