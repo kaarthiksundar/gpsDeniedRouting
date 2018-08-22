@@ -343,4 +343,5 @@ total cost: 792.07
 
 branch-cut-algorithm statistics
 number of user cuts added: 68
-computation time: 7200.06 seconds
+computation time: 7200.07 seconds
+relative optimality gap: 0.0205

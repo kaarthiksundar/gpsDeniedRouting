@@ -355,3 +355,4 @@ total cost: 802.90
 branch-cut-algorithm statistics
 number of user cuts added: 52
 computation time: 7200.04 seconds
+relative optimality gap: 0.0168

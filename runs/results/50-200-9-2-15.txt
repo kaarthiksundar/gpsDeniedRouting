@@ -263,53 +263,53 @@ instance is Feasible
 path length: 51
 target visit sequence
 0
-31
-17
-18
-14
-1
-19
-43
-37
-44
-10
 9
-46
-47
-27
-38
-7
-48
-34
-4
-49
-29
-21
-25
-24
-28
-45
-2
-32
-20
-8
-23
-16
-35
-30
-33
-41
-13
+10
+44
+37
+43
+19
+1
+14
+18
+17
+31
+11
+12
+40
+36
+6
+15
+22
+26
 5
 39
-26
-22
-15
-6
-36
-40
-12
-11
+33
+13
+41
+16
+30
+35
+20
+32
+2
+8
+23
+45
+28
+24
+25
+21
+29
+49
+4
+34
+48
+7
+38
+27
+47
+46
 3
 42
 0
@@ -317,39 +317,40 @@ target visit sequence
 number of landmarks placed: 28
 landmarks indexes placed
 3
-10
 11
 13
-23
+16
 25
-28
 31
 33
-43
-44
 53
+57
 58
 59
+84
 86
-99
+87
 115
 117
 120
-121
 125
-141
-143
 144
 146
 155
 165
+167
 169
+170
+179
+190
+197
 
 cost information
-travel cost: 526.79
-placement cost: 261.41
-total cost: 788.21
+travel cost: 525.14
+placement cost: 263.99
+total cost: 789.13
 
 branch-cut-algorithm statistics
 number of user cuts added: 89
 computation time: 7200.02 seconds
+relative optimality gap: 0.0178

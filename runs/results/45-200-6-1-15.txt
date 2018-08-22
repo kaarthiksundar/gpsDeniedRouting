@@ -265,10 +265,10 @@ target visit sequence
 9
 2
 14
-37
 24
 5
 18
+37
 10
 6
 25
@@ -335,10 +335,11 @@ landmarks indexes placed
 195
 
 cost information
-travel cost: 545.32
+travel cost: 545.44
 placement cost: 251.36
-total cost: 796.68
+total cost: 796.80
 
 branch-cut-algorithm statistics
 number of user cuts added: 82
-computation time: 7200.03 seconds
+computation time: 7200.10 seconds
+relative optimality gap: 0.0193

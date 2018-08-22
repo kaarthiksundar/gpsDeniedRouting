@@ -367,5 +367,6 @@ placement cost: 313.11
 total cost: 943.04
 
 branch-cut-algorithm statistics
-number of user cuts added: 106
+number of user cuts added: 104
 computation time: 7200.01 seconds
+relative optimality gap: 0.0043
