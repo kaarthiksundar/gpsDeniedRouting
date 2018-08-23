@@ -14,7 +14,9 @@ option(ENABLE_CPLEX "Link to Cplex libraries" ON)
 
 
 # LEMON settings
-if(UNIX)
+if (APPLE)
+    FIND_PACKAGE(lemon)
+else()
     set(LEMON_INCLUDE_DIR "/home/kaarthik/libraries/lemon/include" CACHE PATH "LEMON include directory")
     set(LEMON_INCLUDE_DIRS "${LEMON_INCLUDE_DIR}")
     set(LEMON_LIB_NAME "libemon.a")
@@ -23,8 +25,6 @@ if(UNIX)
     MARK_AS_ADVANCED(LEMON_LIBRARY LEMON_INCLUDE_DIR)
     include_directories(${LEMON_INCLUDE_DIRS})
     set(LIBS ${LIBS} ${LEMON_LIBRARIES})
-elseif(APPLE)
-    FIND_PACKAGE(lemon)
 endif()
 
 
@@ -49,8 +49,10 @@ endif()
 # CPLEX flags
 if(APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -DNDEBUG -DIL_STD")
-elseif(UNIX)
+else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -O -fPIC -fno-strict-aliasing -fexceptions -DNDEBUG -DIL_STD -lpthread -ldl")
 endif()
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lemon")
 
 add_subdirectory(src)

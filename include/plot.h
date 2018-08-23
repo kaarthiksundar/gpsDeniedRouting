@@ -9,7 +9,6 @@ void plot(const Instance & instance, const Result & result) {
 
     // create a color palette
     lemon::Palette palette;
-	lemon::Palette paletteW(true);
 
     // create a ListGraph
     lemon::ListGraph g;
@@ -27,7 +26,7 @@ void plot(const Instance & instance, const Result & result) {
 	lemon::ListGraph::NodeMap<double> sizes(g);
 	lemon::ListGraph::NodeMap<int> colors(g);
 	lemon::ListGraph::NodeMap<int> shapes(g);
-	lemon::ListGraph::EdgeMap<int> acolors(g);
+	lemon::ListGraph::EdgeMap<int> ecolors(g);
 	lemon::ListGraph::EdgeMap<int> widths(g);
 
     for (int i=0; i<instance.getNumTargets(); ++i) {
@@ -35,6 +34,7 @@ void plot(const Instance & instance, const Result & result) {
         coords[nodes[i]] = Point(std::get<0>(coordinate), std::get<1>(coordinate));
         shapes[nodes[i]] = 0;
         sizes[nodes[i]] = 1;
+        colors[nodes[i]] = 1;
     }
 
     for (int i=0; i<instance.getNumLandmarks(); ++i) {
@@ -42,6 +42,8 @@ void plot(const Instance & instance, const Result & result) {
         coords[nodes[i + instance.getNumTargets()]] = Point(std::get<0>(coordinate), std::get<1>(coordinate));
         shapes[nodes[i + instance.getNumTargets()]] = 2;
         sizes[nodes[i + instance.getNumTargets()]] = 1;
+        colors[nodes[i + instance.getNumTargets()]] = 2;
+
     }
 
     auto path = result.getPath();
@@ -50,15 +52,17 @@ void plot(const Instance & instance, const Result & result) {
         int t = path[i+1];
         Node ns = nodes[s];
         Node nt = nodes[t];
-        Edge temp = g.addEdge(ns, nt); widths[temp] = 1;
+        Edge temp = g.addEdge(ns, nt); 
+        widths[temp] = 1; ecolors[temp] = 3;
     }
 
     graphToEps(g,"solutionPlot.eps").
 			coords(coords).
 			title("Feasible Solution Illustration").
 			nodeScale(.01).nodeSizes(sizes).
-			nodeShapes(shapes).
+			nodeShapes(shapes).//nodeColors(composeMap(palette, colors)).
 			edgeWidthScale(.005).edgeWidths(widths).
+            //edgeColors(composeMap(palette, ecolors)).
 			enableParallel().parArcDist(1).
 			run();
 
