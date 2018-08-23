@@ -5,7 +5,6 @@
 
 #define XTOL 1.0E-6      	// tolerance for the variables
 #define CONS_TYPES 2	    // number of different types of constraints
-#define PI 3.14159265       // pi value
 
 /* Include files */
 

@@ -1,5 +1,6 @@
 #include "parse.h"
 #include "branchandcut.h"
+#include "plot.h"
 
 using namespace std;
 

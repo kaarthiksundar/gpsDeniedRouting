@@ -20,6 +20,7 @@
 ../bin/main -f 55-200-1 -p ../instances/ -t 15 -d 1
 ../bin/main -f 55-200-2 -p ../instances/ -t 15 -d 1
 ../bin/main -f 55-200-3 -p ../instances/ -t 15 -d 1
+../bin/main -f 55-200-8 -p ../instances/ -t 15 -d 1
 ../bin/main -f 55-200-9 -p ../instances/ -t 15 -d 1
 ../bin/main -f 55-200-10 -p ../instances/ -t 15 -d 1
 ../bin/main -f 55-200-1 -p ../instances/ -t 15 -d 2.5
@@ -33,6 +34,7 @@
 ../bin/main -f 55-200-9 -p ../instances/ -t 15 -d 5
 ../bin/main -f 55-200-10 -p ../instances/ -t 15 -d 5
 ../bin/main -f 60-200-2 -p ../instances/ -t 15 -d 1
+../bin/main -f 60-200-3 -p ../instances/ -t 15 -d 1
 ../bin/main -f 60-200-4 -p ../instances/ -t 15 -d 1
 ../bin/main -f 60-200-5 -p ../instances/ -t 15 -d 1
 ../bin/main -f 60-200-6 -p ../instances/ -t 15 -d 1
@@ -42,9 +44,7 @@
 ../bin/main -f 60-200-4 -p ../instances/ -t 15 -d 2.5
 ../bin/main -f 60-200-5 -p ../instances/ -t 15 -d 2.5
 ../bin/main -f 60-200-6 -p ../instances/ -t 15 -d 2.5
+../bin/main -f 60-200-9 -p ../instances/ -t 15 -d 2.5
 ../bin/main -f 60-200-4 -p ../instances/ -t 15 -d 5
 ../bin/main -f 60-200-5 -p ../instances/ -t 15 -d 5
 ../bin/main -f 60-200-9 -p ../instances/ -t 15 -d 5
-../bin/main -f 55-200-8 -p ../instances/ -t 15 -d 1 
-../bin/main -f 60-200-3 -p ../instances/ -t 15 -d 1 
-../bin/main -f 60-200-9 -p ../instances/ -t 15 -d 1 

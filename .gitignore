@@ -3,10 +3,14 @@ build
 data
 instance_generation
 runs/output/*
+*.pyc
+post_process/runTimes.pdf
+post_process/numLMs.pdf
+*.csv
+post_process/timeout_runs
 
 # Ignore any executables
 bin/*
-
 
 # Ignore Mac specific files
 .DS_Store

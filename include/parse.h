@@ -21,11 +21,13 @@ class CLIParser {
         std::string _lpFile;
         std::string _logFile;
         std::string _resultFile;
+        std::string _plotFile;
+        bool _plot;
 
     public:
         CLIParser(int argc, char **argv) : _argc(argc), _argv(argv), _instanceName(),
             _instancePath(), _threshold(), _discretizationLength(), _writeLP(false), _writeLog(false),
-            _cplexOutput(false), _lpFile(), _logFile(), _resultFile() {}; 
+            _cplexOutput(false), _lpFile(), _logFile(), _resultFile(), _plotFile(), _plot(false) {}; 
         
         std::string getInstanceName() const { return _instanceName; };
         std::string getInstancePath() const { return _instancePath; };
@@ -37,6 +39,8 @@ class CLIParser {
         std::string getLPFile() const { return _lpFile; };
         std::string getLogFile() const { return _logFile; };
         std::string getResultFile() const { return _resultFile; };
+        std::string getPlotFile() const { return _plotFile; };
+        bool plot() const { return _plot; };
 
         void parse(); 
 };
@@ -92,10 +96,15 @@ void CLIParser::parse() {
             continue;
         }
 
+        if (std::strcmp(_argv[i], "--plot") == 0) {
+            _plot = true;
+            continue;
+        }
+
         if (std::strcmp(_argv[i], "--help") == 0) {
             std::cout << std::endl << "Usage: " << std::endl
                 << "./main [-f filename] [-p filepath] [-t threshold] " << std::endl 
-                << " \t [-d discretization-length] [--log] [--lp] [--display]" << std::endl 
+                << " \t [-d discretization-length] [--log] [--lp] [--display] [--plot]" << std::endl 
                 << "command line argument options and defaults:" << std::endl << std::endl 
                 << "mandatory arguments are" << std::endl << std::endl 
                 << "-f \t instance file name" << std::endl 
@@ -107,7 +116,8 @@ void CLIParser::parse() {
                 << "             assumes there is a folder entitled logs/ in cwd" << std::endl
                 << "--lp         write lp file (default: false)" << std::endl  
                 << "             assumes there is a folder entitled lp/ in cwd" << std::endl
-                << "--display    switch on cplex display (default: false)" << std::endl << std::endl
+                << "--display    switch on cplex display (default: false)" << std::endl 
+                << "--plot       plot the solution (default: false)" << std::endl << std::endl
                 << "if both --log and --display flags are used, the log file will be " << std::endl
                 << "created and cplex display with by turned off" << std::endl; 
         }
@@ -129,6 +139,7 @@ void CLIParser::parse() {
     _resultFile = "results/" + _instanceName + 
                 "-" + std::to_string(int(_discretizationLength)) +
                 "-" + std::to_string(int(_threshold)) + ".txt";
+    _plotFile = "solutionPlot.eps";
 
     return;
 };
