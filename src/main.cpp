@@ -14,6 +14,7 @@ int main(int argc, char **argv) {
 	bool writeLog = parser.getWriteLog();
 	bool writeLP = parser.getWriteLP();
 	bool cplexOutput = parser.getCplexOutput();
+	bool plotStatus = parser.plot();
 
 	instance.setName(parser.getInstanceName());
 	instance.setPath(parser.getInstancePath());
@@ -136,6 +137,8 @@ int main(int argc, char **argv) {
 		result.setUserCuts(cplex.getNcuts(IloCplex::CutType::CutUser));
 		result.setRelOptGap(cplex.getMIPRelativeGap());
 		result.writeToFile(resultOutfile);
+		if (plotStatus) 
+			plot(instance, result);
 		printf(ANSI_COLOR_YELLOW 
 			"[info] results written to %s\n"
 			ANSI_COLOR_RESET, parser.getResultFile().c_str());
