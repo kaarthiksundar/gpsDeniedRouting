@@ -7,6 +7,7 @@
 #include "model.h"
 #include <set>
 #include <lemon/list_graph.h>
+#include <lemon/hao_orlin.h>
 #include <lemon/nagamochi_ibaraki.h>
 #include <lemon/connectivity.h>
 
@@ -121,7 +122,11 @@ std::vector<IloRange> generateUserCuts(Model & model, const Instance & instance,
                 
     std::vector<IloRange> constraints;
     lemon::ListGraph supportGraph;
-    for (int i=0; i<instance.getNumTargets(); ++i) supportGraph.addNode();
+    lemon::ListDigraph supportDigraph;
+    for (int i=0; i<instance.getNumTargets(); ++i) {
+        supportGraph.addNode();
+        supportDigraph.addNode();
+    }
 
     IloNumArray xVals = variableValues.at("x");
 
@@ -130,12 +135,23 @@ std::vector<IloRange> generateUserCuts(Model & model, const Instance & instance,
             int from = instance.from(i);
             int to = instance.to(i);
             supportGraph.addEdge(supportGraph.nodeFromId(from), supportGraph.nodeFromId(to));
+            supportDigraph.addArc(supportDigraph.nodeFromId(from), supportDigraph.nodeFromId(to));
+            supportDigraph.addArc(supportDigraph.nodeFromId(to), supportDigraph.nodeFromId(from));
         }
     
     lemon::ListGraph::EdgeMap<float> capacity(supportGraph);
 	for (lemon::ListGraph::EdgeIt e(supportGraph); e!=lemon::INVALID; ++e) {
 		int index = instance.getEdgeFromTargets(supportGraph.id(supportGraph.u(e)), supportGraph.id(supportGraph.v(e)));
 		capacity[e] = xVals[index];
+	}
+
+    lemon::ListDigraph::ArcMap<float> capacityDigraph(supportDigraph);
+    for (lemon::ListDigraph::ArcIt e(supportDigraph); e!=lemon::INVALID; ++e) {
+		int index = instance.getEdgeFromTargets(
+            supportDigraph.id(supportDigraph.source(e)), 
+            supportDigraph.id(supportDigraph.target(e))
+            );
+		capacityDigraph[e] = xVals[index];
 	}
 
     lemon::ListGraph::NodeMap<int> componentMap(supportGraph);
@@ -147,6 +163,23 @@ std::vector<IloRange> generateUserCuts(Model & model, const Instance & instance,
 		    components[componentMap[n]].insert(supportGraph.id(n));
 
         for (auto & component : components) {
+            IloExpr expr(model.getEnv());
+            auto edgeIds = instance.getGamma(component);
+            for (auto const & edgeId : edgeIds)
+                expr += model.getVariables().at("x")[edgeId];
+            IloRange constr(model.getEnv(), expr, component.size()-1);
+            constraints.push_back(constr);
+        }
+    }
+    else {
+        lemon::HaoOrlin<lemon::ListDigraph, lemon::ListDigraph::ArcMap<float> > mc(supportDigraph, capacityDigraph);
+        mc.init(); mc.calculateOut();
+        lemon::ListDigraph::NodeMap<bool> cutMap(supportDigraph);
+		float cutValue = mc.minCutMap(cutMap);
+        if (cutValue < 2 - 1E-2) {
+            std::set<int> component;
+            for (lemon::ListDigraph::NodeIt n(supportDigraph); n!=lemon::INVALID; ++n)
+                if (cutMap[n] == true) component.insert(supportDigraph.id(n));
             IloExpr expr(model.getEnv());
             auto edgeIds = instance.getGamma(component);
             for (auto const & edgeId : edgeIds)
