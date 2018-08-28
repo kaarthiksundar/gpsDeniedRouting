@@ -117,27 +117,40 @@ std::vector<IloRange> generateLazyConstraints(Model & model, const Instance & in
     return constraints;
 };
 
+// 2-matching constraint separation is commented out
 std::vector<IloRange> generateUserCuts(Model & model, const Instance & instance,
                 std::unordered_map<std::string, IloNumArray> &variableValues) {
                 
     std::vector<IloRange> constraints;
-    lemon::ListGraph supportGraph;
+    lemon::ListGraph supportGraph, twoMatchSupportGraph;
     lemon::ListDigraph supportDigraph;
+    std::set<int> targetSet;
+
     for (int i=0; i<instance.getNumTargets(); ++i) {
         supportGraph.addNode();
+        twoMatchSupportGraph.addNode();
         supportDigraph.addNode();
+        targetSet.insert(i);
     }
 
     IloNumArray xVals = variableValues.at("x");
 
-    for (auto i=0; i<xVals.getSize(); ++i)
+    for (auto i=0; i<xVals.getSize(); ++i) 
         if (xVals[i] > 1E-5) {
             int from = instance.from(i);
             int to = instance.to(i);
             supportGraph.addEdge(supportGraph.nodeFromId(from), supportGraph.nodeFromId(to));
             supportDigraph.addArc(supportDigraph.nodeFromId(from), supportDigraph.nodeFromId(to));
             supportDigraph.addArc(supportDigraph.nodeFromId(to), supportDigraph.nodeFromId(from));
+            /*
+            if (xVals[i] < 1 - 1E-5) 
+                twoMatchSupportGraph.addEdge(
+                    twoMatchSupportGraph.nodeFromId(from), 
+                    twoMatchSupportGraph.nodeFromId(to)
+                    );
+            */
         }
+
     
     lemon::ListGraph::EdgeMap<float> capacity(supportGraph);
 	for (lemon::ListGraph::EdgeIt e(supportGraph); e!=lemon::INVALID; ++e) {
@@ -155,7 +168,9 @@ std::vector<IloRange> generateUserCuts(Model & model, const Instance & instance,
 	}
 
     lemon::ListGraph::NodeMap<int> componentMap(supportGraph);
+    // lemon::ListGraph::NodeMap<int> twoMatchComponentMap(twoMatchSupportGraph);
     int numComponents = connectedComponents(supportGraph, componentMap);
+    // int twoMatchNumComponents = connectedComponents(twoMatchSupportGraph, twoMatchComponentMap);
 
     if (numComponents > 1) {
         std::vector<std::set<int>> components(numComponents);
@@ -188,7 +203,56 @@ std::vector<IloRange> generateUserCuts(Model & model, const Instance & instance,
             constraints.push_back(constr);
         }
     }
+
+    /*
+    if (twoMatchNumComponents > 1) {
+        std::vector<std::set<int>> components(twoMatchNumComponents);
+        for (lemon::ListGraph::NodeIt n(twoMatchSupportGraph); n!=lemon::INVALID; ++n)
+            components[twoMatchComponentMap[n]].insert(twoMatchSupportGraph.id(n));
+        std::vector<std::set<int>> handles;
+
+        for (auto component : components) 
+            if (component.size() >= 3) { handles.push_back(component); };
+
+        for (auto handle : handles) {
+            std::vector<int> teeth;
+            std::set<int> toCheck;
+            set_difference(targetSet.begin(), targetSet.end(), 
+                handle.begin(), handle.end(),
+                std::inserter(toCheck, toCheck.end()));
+            std::set<int> intersection;
+            for (auto handleTarget : handle) {
+                for (auto outsideTarget : toCheck) {
+                    int edgeId = instance.getEdgeFromTargets(handleTarget, outsideTarget);
+                    if (edgeId == std::numeric_limits<int>::infinity()) continue;
+                    bool checkIntersection = (intersection.find(handleTarget) == intersection.end()) &&
+                        (intersection.find(outsideTarget) == intersection.end());
+                    if (xVals[edgeId] > 1 - 1E-5) {
+                        if (checkIntersection) {
+                            teeth.push_back(edgeId);
+                            intersection.insert(handleTarget); 
+                            intersection.insert(outsideTarget);
+                        }
+                    }
+                }
+            }
+            if (teeth.size() >= 3 && teeth.size()%2 != 0) {
+                IloExpr expr(model.getEnv());
+                auto edgeIds = instance.getGamma(handle);
+                for (auto const & edgeId : edgeIds)
+                    expr += model.getVariables().at("x")[edgeId];
+                for (auto const & edgeId : teeth)
+                    expr += model.getVariables().at("x")[edgeId];
+                double rhs = handle.size() + (teeth.size() - 1)/2;
+                IloRange constr(model.getEnv(), expr, rhs);
+                constraints.push_back(constr);
+            }
+        }
+
+    }
+    */
     
+
     return constraints;
 
 };
