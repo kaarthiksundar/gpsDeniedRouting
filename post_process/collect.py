@@ -171,16 +171,16 @@ ax.set_xticklabels(labels)
 ax.set_ylabel(r'Computation time in seconds')
 ax.set_xticks([2.5, 7.5, 12.5, 17.5, 22.5])
 d, r = indexMapReverse[0]
-figtext = r'$d={},\,r={}$'.format(d, r)
+figtext = r'$\Delta={},\,r={}$'.format(d, r)
 plt.figtext(0.74, 0.35, figtext, backgroundcolor='lightblue', color='black')
 d, r = indexMapReverse[1]
-figtext = r'$d={},\,r={}$'.format(d, r)
+figtext = r'$\Delta={},\,r={}$'.format(d, r)
 plt.figtext(0.74, 0.28, figtext, backgroundcolor='lightgreen', color='black')
 d, r = indexMapReverse[2]
-figtext = r'$d={},\,r={}$'.format(d, r)
+figtext = r'$\Delta={},\,r={}$'.format(d, r)
 plt.figtext(0.73, 0.21, figtext, backgroundcolor='lightgray', color='black')
 d, r = indexMapReverse[3]
-figtext = r'$d={},\,r={}$'.format(d, r)
+figtext = r'$\Delta={},\,r={}$'.format(d, r)
 plt.figtext(0.73, 0.14, figtext, backgroundcolor='wheat', color='black')
 plt.savefig('runTimes.pdf', format='pdf')
 
@@ -220,16 +220,16 @@ ax.set_xticklabels(labels)
 ax.set_ylabel(r'Number of landmarks placed')
 ax.set_xticks([2.5, 7.5, 12.5, 17.5, 22.5])
 d, r = indexMapReverse[0]
-figtext = r'$d={},\,r={}$'.format(d, r)
+figtext = r'$\Delta={},\,r={}$'.format(d, r)
 plt.figtext(0.74, 0.55, figtext, backgroundcolor='lightblue', color='black')
 d, r = indexMapReverse[1]
-figtext = r'$d={},\,r={}$'.format(d, r)
+figtext = r'$\Delta={},\,r={}$'.format(d, r)
 plt.figtext(0.74, 0.48, figtext, backgroundcolor='lightgreen', color='black')
 d, r = indexMapReverse[2]
-figtext = r'$d={},\,r={}$'.format(d, r)
+figtext = r'$\Delta={},\,r={}$'.format(d, r)
 plt.figtext(0.73, 0.21, figtext, backgroundcolor='lightgray', color='black')
 d, r = indexMapReverse[3]
-figtext = r'$d={},\,r={}$'.format(d, r)
+figtext = r'$\Delta={},\,r={}$'.format(d, r)
 plt.figtext(0.73, 0.14, figtext, backgroundcolor='wheat', color='black')
 plt.savefig('numLMs.pdf', format='pdf')
 
