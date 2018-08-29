@@ -43,6 +43,7 @@ int main(int argc, char **argv) {
 		cplex.setParam(IloCplex::VarSel, 3);
 		cplex.setParam(IloCplex::TiLim, 7200.0);
 		cplex.setParam(IloCplex::LBHeur, 1);
+		cplex.setParam(IloCplex::Param::MIP::Tolerances::MIPGap, 0.05);
 
 		ofstream outfile;
 		outfile.open(parser.getLogFile());

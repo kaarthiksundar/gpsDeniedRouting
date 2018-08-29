@@ -2,7 +2,7 @@ import mmap
 import common
 import re
 
-numTargets = [20]
+numTargets = [30]
 
 discretizationLength = [0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]
 
@@ -42,7 +42,7 @@ for t in numTargets:
             tab.rows[rowCount] = row
             rowCount += 1
 
-csvOutputFile = 'table-lm-{}.csv'.format(int(d*10))
+csvOutputFile = 'table-lm-{}.csv'.format(numTargets[0])
 print 'writing table {}'.format(csvOutputFile)
 with open(csvOutputFile, 'w') as file:
     common.writecsv(tab, file)
