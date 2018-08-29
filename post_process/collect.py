@@ -11,6 +11,15 @@ threshold = range(15, 30, 5)
 
 numLandmarks = 200
 
+numTargets = range(20, 65, 10)
+
+discretizationLength = [1, 2.5]
+discretizationLengthInt = [1, 2]
+
+threshold = [15, 20]
+
+numLandmarks = 200
+
 instances = {}
 
 success = {}
