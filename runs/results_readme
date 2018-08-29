@@ -10,7 +10,7 @@
 
 # results_3.tar.gz
 
-0. Targets is set to 30 and range set to 15. 
+0. Targets is set to 20 and range set to 15. 
 1. \Delta = {0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2.0}
 2. With SEC LP separation
 
