@@ -137,7 +137,7 @@ void CLIParser::parse() {
                 "-" + std::to_string(int(_discretizationLength)) +
                 "-" + std::to_string(int(_threshold)) + ".log";
     _resultFile = "results/" + _instanceName + 
-                "-" + std::to_string(int(_discretizationLength)) +
+                "-" + std::to_string(int(_discretizationLength * 10)) +
                 "-" + std::to_string(int(_threshold)) + ".txt";
     _plotFile = "solutionPlot.eps";
 
