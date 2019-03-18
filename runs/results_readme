@@ -10,7 +10,7 @@
 
 # results_3.tar.gz
 
-0. Targets is set to 20 and range set to 15. 
+0. Targets is set to {20, 30} and range set to 15. 
 1. \Delta = {0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2.0}
 2. With SEC LP separation
 
@@ -18,4 +18,17 @@
 
 0. Targets varied from 20 to 60 in steps of 10, range = {15, 20}, \Delta = {1, 2.5}
 1. With SEC LP separation
-2. With 5% optimality gap criteria
+2. Optimality gap criteria = 5% 
+
+# results_5.tar.gz
+
+0. Targets varied from 20 to 60 in steps of 10, range = {15, 20}, \Delta = {1, 2.5}
+1. With SEC LP separation
+2. Landmark count = 3
+
+# results_6.tar.gz
+
+0. Targets varied from 20 to 60 in steps of 10, range = {15, 20}, \Delta = {1, 2.5}
+1. With SEC LP separation
+2. Landmark count = 3
+4. Optimality gap criteria = 5%

@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
 	instance.setPath(parser.getInstancePath());
 	instance.setThreshold(parser.getThreshold());
 	instance.setDiscretizationLength(parser.getDiscretizationLength());
+    instance.setLMCoverCount(3);
 	instance.readData();
 	instance.populateEdges();
 	instance.populatePlacementCosts();

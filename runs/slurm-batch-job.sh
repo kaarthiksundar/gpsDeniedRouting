@@ -9,8 +9,6 @@
 #SBATCH --qos=normal
 #
 
-lanlytics-ssh-retry
-
 cmd_line="sed -n '$SLURM_ARRAY_TASK_ID p' $1"
 echo "get line: $cmd_line"
 
@@ -25,9 +23,4 @@ echo "output: $stdout"
 eval $cmd
 
 #srun --output=$stdout $run_cmd
-
-PID=$(pgrep -f license.lanlytics.com)
-echo "killing ps: $PID"
-kill -15 $PID
-sleep 5
 
